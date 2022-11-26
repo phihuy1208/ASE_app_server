@@ -80,11 +80,11 @@ class authController {
         const getUser = await authModel.findOne({
           email: isVerifiedEmail.email,
         });
-        const saveEmail = await authModel.findByIdAndUpdate(getUser._id, {
-          $set: {
-            verified: true,
-          },
-        });
+        if (!getUser) {
+          return res.status(400).json({ message: "user not found" });
+        }
+        getUser.verified = true;
+        const saveEmail = await getUser.save();
         if (saveEmail) {
           return res
             .status(400)

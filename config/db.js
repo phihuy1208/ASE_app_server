@@ -6,11 +6,7 @@ const connectDB = async () => {
     useUnifiedTopology: true,
   };
   mongoose
-    .connect(
-      process.env.MONGODB_URI ||
-        "mongodb+srv://mongo:mongo@awproject.ciikl4n.mongodb.net/?retryWrites=true&w=majority",
-      connectionParams
-    )
+    .connect(process.env.MONGODB_URI, connectionParams)
     .then(() => console.log("MongoDB connection established."))
     .catch((error) =>
       console.error("MongoDB connection failed:", error.message)
