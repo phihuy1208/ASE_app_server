@@ -14,8 +14,7 @@ class authController {
         const genSalt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(password, genSalt);
 
-        const secretKey = "random string";
-        const token = jwt.sign({ email: email }, secretKey, {
+        const token = jwt.sign({ email: email }, process.env.SECRET_KEY, {
           expiresIn: "10m",
         });
         const link = `http://localhost:5000/api/auth/verify/${token}`;
@@ -50,8 +49,8 @@ class authController {
             email === isUser.email &&
             (await bcryptjs.compare(password, isUser.password))
           ) {
-            const token = jwt.sign({ userID: isUser._id }, "random string", {
-              expiresIn: "1h",
+            const token = jwt.sign({ userID: isUser._id }, process.env.SECRET_KEY, {
+              expiresIn: "1d",
             });
             return res.status(201).json({
               message: "Successfully login",
@@ -74,8 +73,7 @@ class authController {
   static saveVerifiedEmail = async (req, res) => {
     const { token } = req.params;
     if (token) {
-      const secretKey = "random string";
-      const isVerifiedEmail = await jwt.verify(token, secretKey);
+      const isVerifiedEmail = await jwt.verify(token, process.env.SECRET_KEY);
       if (isVerifiedEmail) {
         const getUser = await authModel.findOne({
           email: isVerifiedEmail.email,

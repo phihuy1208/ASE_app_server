@@ -2,6 +2,7 @@ import express from "express";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
+import groupsRouter from "./groups/groups.router.js";
 import cors from "cors";
 
 const app = express();
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/groups", groupsRouter);
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}`);
 });
