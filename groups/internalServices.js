@@ -26,5 +26,5 @@ export const isGroupIdExist = async (groupId) => {
     }
 }
 
-export  {isUserIdsExist} from "../users/internalServices.js";
+export  {isUserIdsExist, getUserName} from "../users/internalServices.js";
 export {default as verifyToken} from "../middlewares/index.js";

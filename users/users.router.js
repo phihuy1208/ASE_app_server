@@ -1,9 +1,12 @@
-const  express = require("express");
+import express from "express";
+import usersController from "./users.controller.js";
+
 const usersRouter = express.Router();
 
-const usersController = require("./users.controller");
 
-usersRouter.get("/", usersController.list);
+usersRouter.post("/register", usersController.userRegistration);
+usersRouter.use("/login", usersController.userLogin);
+usersRouter.use("/verify/:token", usersController.saveVerifiedEmail);
 
-
-module.exports = usersRouter;
+// usersRouter.get('/', usersController)
+export default usersRouter;

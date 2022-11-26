@@ -1,7 +1,5 @@
-import UsersModel from ('./users.model.js');
+import UsersModel from "./users.model.js";
 
-class UsersService {
+class UsersService {}
 
-}
-
-export default new UsersService()
+export default new UsersService();
