@@ -54,7 +54,7 @@ class GroupsService {
           name: group.name,
           owner: tempOwner,
           co_owners: tempCoOwners,
-          member: tempMembers,
+          members: tempMembers,
         });
       }
       return { success: true, list: tempGroup };
@@ -81,7 +81,7 @@ class GroupsService {
           name: group.name,
           owner: tempOwner,
           co_owners: tempCoOwners,
-          member: tempMembers,
+          members: tempMembers,
         });
       }
       return { success: true, list: tempGroup };
