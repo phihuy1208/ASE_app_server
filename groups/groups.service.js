@@ -36,17 +36,25 @@ class GroupsService {
       const listGroupOwner = await GroupsModel.find({ owner: userId }, {});
       const tempGroup = [];
       for (const group of listGroupOwner) {
-        const tempMember = [];
+        const tempMembers = [];
         for (const member of group.members) {
           const name = await getUserName(member);
-          tempMember.push({ userId: member, name });
+          tempMembers.push({ userId: member, name });
         }
+        const tempCoOwners = [];
+        for (const coOwner of group.co_owners) {
+          const name = await getUserName(coOwner);
+          tempCoOwners.push({ userId: coOwner, name });
+        }
+
+        const ownerName = await getUserName(group.owner);
+        const tempOwner = { userId: group.owner, name: ownerName };
         tempGroup.push({
           _id: group._id,
           name: group.name,
-          owner: group.owner,
-          co_owners: group.co_owners,
-          member: tempMember,
+          owner: tempOwner,
+          co_owners: tempCoOwners,
+          member: tempMembers,
         });
       }
       return { success: true, list: tempGroup };
@@ -54,17 +62,26 @@ class GroupsService {
       const listGroupJoined = await GroupsModel.find({ members: userId });
       const tempGroup = [];
       for (const group of listGroupJoined) {
-        const tempMember = [];
+        const tempMembers = [];
         for (const member of group.members) {
           const name = await getUserName(member);
-          tempMember.push({ userId: member, name });
+          tempMembers.push({ userId: member, name });
         }
+        const tempCoOwners = [];
+        for (const coOwner of group.co_owners) {
+          const name = await getUserName(coOwner);
+          tempCoOwners.push({ userId: coOwner, name });
+        }
+
+        const ownerName = await getUserName(group.owner);
+        const tempOwner = { userId: group.owner, name: ownerName };
+
         tempGroup.push({
           _id: group._id,
           name: group.name,
-          owner: group.owner,
-          co_owners: group.co_owners,
-          member: tempMember,
+          owner: tempOwner,
+          co_owners: tempCoOwners,
+          member: tempMembers,
         });
       }
       return { success: true, list: tempGroup };
