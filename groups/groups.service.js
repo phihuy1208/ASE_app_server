@@ -151,11 +151,23 @@ class GroupsService {
     }
   };
 
-  sendEmailToInviteUser = async (email, groupId) => {
-    const link = `http://localhost:5000/login/${groupId}`;
-    sendEmailtoInviteUser(link, email);
+  sendEmailToInviteUser = async (email, groupId, userId) => {
+    const groupOwner = (await groupsModel.findById(groupId)).owner;
+    const groupCoOwners = (await groupsModel.findById(groupId)).co_owners;
 
-    return { success: true };
+    if (userId === groupOwner || userId in groupCoOwners) {
+      const link = `http://localhost:5000/login/${groupId}`;
+      sendEmailtoInviteUser(link, email);
+  
+      return { success: true };
+    }
+    else {
+      return {
+        success: false,
+        errorCode: "G003",
+        errorMessage: groupsErrors["G003"],
+      }
+    }
   };
 }
 

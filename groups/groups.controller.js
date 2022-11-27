@@ -62,13 +62,9 @@ class GroupController {
 
   sendEmailToInviteUser = async (req, res) => {
     try {
-      const { email, groupId } = req.body;
-      console.log(email, groupId);
-      res
-        .status(201)
-        .json(await groupsService.sendEmailToInviteUser(email, groupId));
+      const { email, groupId, userId } = req.body;
+      res.status(201).json(await groupsService.sendEmailToInviteUser(email, groupId, userId));
     } catch (err) {
-      console.log(err);
       res.status(500).json({ errorMessage: err.message ?? "Unknown error" });
     }
   };
