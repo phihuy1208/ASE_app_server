@@ -19,6 +19,4 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/groups", groupsRouter);
-app.listen(PORT, () => {
-  console.log(`API is running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => {});

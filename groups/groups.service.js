@@ -156,7 +156,7 @@ class GroupsService {
     const groupCoOwners = (await groupsModel.findById(groupId)).co_owners;
 
     if (userId === groupOwner || userId in groupCoOwners) {
-      const link = `http://localhost:5000/login/${groupId}`;
+      const link = `https://19127165-19127423-aseapp.netlify.app/login/${groupId}`;
       sendEmailtoInviteUser(link, email);
   
       return { success: true };

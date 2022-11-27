@@ -17,7 +17,7 @@ class authController {
         const token = jwt.sign({ email: email }, process.env.SECRET_KEY, {
           expiresIn: "10m",
         });
-        const link = `http://localhost:5000/api/auth/verify/${token}`;
+        const link = `https://aseapp-19127165-19127423.herokuapp.com/api/auth/verify/${token}`;
 
         sendEmailtoUser(link, email);
 
