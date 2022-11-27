@@ -49,9 +49,13 @@ class authController {
             email === isUser.email &&
             (await bcryptjs.compare(password, isUser.password))
           ) {
-            const token = jwt.sign({ userID: isUser._id }, process.env.SECRET_KEY, {
-              expiresIn: "1d",
-            });
+            const token = jwt.sign(
+              { userID: isUser._id },
+              process.env.SECRET_KEY,
+              {
+                expiresIn: "1d",
+              }
+            );
             return res.status(201).json({
               message: "Successfully login",
               token,
@@ -93,6 +97,24 @@ class authController {
       }
     } else {
       return res.status(400).json({ message: "Invalid URL" });
+    }
+  };
+
+  static changeInformation = async (req, res) => {
+    try {
+      const { userId, newName, newPassword } = req.body;
+
+      const genSalt = await bcryptjs.genSalt(10);
+      const hashedPassword = await bcryptjs.hash(newPassword, genSalt);
+
+      const user = await authModel.findOneAndUpdate(
+        { _id: userId },
+        { name: newName, password: hashedPassword },
+        { new: true }
+      );
+      res.status(201).json({ success: true, userName: user.name });
+    } catch (err) {
+      res.status(500).json({ errorMessage: err.message ?? "Unknown error" });
     }
   };
 }
