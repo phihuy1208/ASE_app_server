@@ -7,6 +7,7 @@ import {
   getUserName,
 } from "./internalServices.js";
 
+import { sendEmailtoInviteUser } from "../config/EmailTemplate.js";
 class GroupsService {
   create = async (userId, groupName) => {
     try {
@@ -148,6 +149,13 @@ class GroupsService {
         errorMessage: groupsErrors["G002"],
       };
     }
+  };
+
+  sendEmailToInviteUser = async (email, groupId) => {
+    const link = `http://localhost:5000/login/${groupId}`;
+    sendEmailtoInviteUser(link, email);
+
+    return { success: true };
   };
 }
 
